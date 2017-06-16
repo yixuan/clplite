@@ -1,0 +1,21 @@
+PKG_CPPFLAGS = -I./Clp -I./CoinUtils -DHAVE_CONFIG_H
+PKG_LIBS = -L./Clp -lClp -L./CoinUtils -lCoinUtils
+
+.PHONY: all clean
+
+all: $(SHLIB)
+
+$(SHLIB): Clp/libClp.a CoinUtils/libCoinUtils.a
+
+Clp/libClp.a: CoinUtils/libCoinUtils.a
+	cd Clp && $(MAKE) all CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(ALL_CXXFLAGS)" AR="$(AR)" RM="$(RM)" CP="$(CP)"
+
+CoinUtils/libCoinUtils.a:
+	cd CoinUtils && $(MAKE) all CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(ALL_CXXFLAGS)" AR="$(AR)" RM="$(RM)" CP="$(CP)"
+
+clean:
+	$(RM) *.o
+	$(RM) *.dll
+	$(RM) *.so
+	cd Clp && $(MAKE) clean
+	cd CoinUtils && $(MAKE) clean

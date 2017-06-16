@@ -1,0 +1,27 @@
+Package: clplite
+Type: Package
+Title: A Lightweight Linear Programming Solver Based on 'Clp'
+Version: 0.1.0
+Description: A high performance linear programming solver based on the 'Clp'
+    library (https://projects.coin-or.org/Clp). Sparse constraints are fully
+    supported for solving large-scale problems. Source code of the 'Clp' library
+    is included in the package for easy installation.
+Authors@R: c(
+    person("Yixuan", "Qiu", email = "yixuan.qiu@cos.name", role = c("aut", "cre")),
+    person("John", "Forrest", role = "aut", comment = "The CLP library"),
+    person("Julian", "Hall", role = "aut", comment = "The CLP library"),
+    person("Lou", "Hafer", role = "aut", comment = "The CLP library"),
+    person("Matthew", "Saltzman", role = "aut", comment = "The CLP library"),
+    person("J.P.", "Fasano", role = "aut", comment = "The CLP library"),
+    person("Laszlo", "Ladanyi", role = "aut", comment = "The CLP library"),
+    person("Francois", "Margot", role = "aut", comment = "The CLP library"),
+    person("John", "Tomlin", role = "aut", comment = "The CLP library"),
+    person("Andreas", "Waechter", role = "aut", comment = "The CLP library")
+    )
+License: EPL
+Encoding: UTF-8
+LazyData: true
+Imports: Rcpp (>= 0.12.11), Matrix
+LinkingTo: Rcpp
+SystemRequirements: C++11
+RoxygenNote: 6.0.1

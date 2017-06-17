@@ -8,10 +8,10 @@ all: $(SHLIB)
 $(SHLIB): Clp/libClp.a CoinUtils/libCoinUtils.a
 
 Clp/libClp.a: CoinUtils/libCoinUtils.a
-	cd Clp && $(MAKE) all CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(ALL_CXXFLAGS)" AR="$(AR)" RM="$(RM)" CP="$(CP)"
+	cd Clp && $(MAKE) all CXX="$(CXX1X) $(CXX1XSTD)" CXXFLAGS="$(CXX1XFLAGS) $(CXX1XPICFLAGS)" AR="$(AR)" RM="$(RM)"
 
 CoinUtils/libCoinUtils.a:
-	cd CoinUtils && $(MAKE) all CXX="$(CXX11) $(CXX11STD)" CXXFLAGS="$(ALL_CXXFLAGS)" AR="$(AR)" RM="$(RM)" CP="$(CP)"
+	cd CoinUtils && $(MAKE) all CXX="$(CXX1X) $(CXX1XSTD)" CXXFLAGS="$(CXX1XFLAGS) $(CXX1XPICFLAGS)" AR="$(AR)" RM="$(RM)"
 
 clean:
 	$(RM) *.o

@@ -1,3 +1,5 @@
 importFrom(Rcpp, evalCpp)
+importClassesFrom(Matrix, dgCMatrix, dgRMatrix)
+import(methods)
 useDynLib(clplite)
 export(clp_solve)

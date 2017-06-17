@@ -1,14 +1,15 @@
 #include <Rcpp.h>
 #include <ClpSimplex.hpp>
 #include <CoinPackedMatrix.hpp>
+#include "matrix.h"
 
 using Rcpp::NumericVector;
 using Rcpp::IntegerVector;
+using Rcpp::S4;
 
 // [[Rcpp::export]]
 NumericVector clp_solve_(
-    NumericVector obj,
-    int nrow, int ncol, IntegerVector mi, IntegerVector mj, NumericVector mx,
+    NumericVector obj, S4 mat,
     NumericVector constr_lb, NumericVector constr_ub,
     NumericVector var_lb, NumericVector var_ub,
     bool obj_max
@@ -21,11 +22,22 @@ NumericVector clp_solve_(
     model.setOptimizationDirection(obj_max ? -1 : 1);
 
     // Constraint matrix
-    CoinPackedMatrix constr(false, mi.begin(), mj.begin(), mx.begin(), mx.length());
-    constr.setDimensions(nrow, ncol);
+    std::string type = mat.attr("class");
+    CoinPackedMatrix* constr;
+    if(type == "dgTMatrix")
+    {
+        constr = from_dgTMatrix(mat);
+    } else if(type == "dgCMatrix") {
+        constr = from_dgCMatrix(mat);
+    } else if(type == "dgRMatrix") {
+        constr = from_dgRMatrix(mat);
+    } else {
+        Rcpp::stop("unsupported matrix type");
+    }
 
     // Add constraints
-    model.loadProblem(constr, var_lb.begin(), var_ub.begin(), obj.begin(), constr_lb.begin(), constr_ub.begin());
+    model.loadProblem(*constr, var_lb.begin(), var_ub.begin(), obj.begin(), constr_lb.begin(), constr_ub.begin());
+    delete constr;
 
     // Solve
     model.primal();

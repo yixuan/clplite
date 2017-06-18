@@ -3,14 +3,16 @@
 #include <CoinPackedMatrix.hpp>
 #include "matrix.h"
 
+using Rcpp::NumericMatrix;
 using Rcpp::NumericVector;
 using Rcpp::IntegerVector;
 using Rcpp::S4;
 using Rcpp::List;
+using Rcpp::Named;
 
 // [[Rcpp::export]]
-NumericVector clp_solve_(
-    NumericVector obj, S4 mat,
+List clp_solve_(
+    NumericMatrix obj, S4 mat,
     NumericVector constr_lb, NumericVector constr_ub,
     NumericVector var_lb, NumericVector var_ub,
     bool obj_max,
@@ -52,7 +54,32 @@ NumericVector clp_solve_(
     const double* solution = model.primalColumnSolution();
 
     // Wrap result
-    NumericVector sol(solution, solution + nc);
+    const int nproblem = obj.ncol();
+    NumericMatrix sol(nc, nproblem);
+    NumericVector objval(nproblem);
+    IntegerVector status(nproblem);
 
-    return sol;
+    // Obtain the solution for the first problem
+    std::copy(solution, solution + nc, sol.begin());
+    objval[0] = model.getObjValue();
+    status[0] = model.status();
+
+    // If we have more than one problems
+    for(int i = 1; i < nproblem; i++)
+    {
+        model.chgObjCoefficients(&obj(0, i));
+        model.primal();
+        const int nc = model.numberColumns();
+        const double* solution = model.primalColumnSolution();
+
+        std::copy(solution, solution + nc, &sol(0, i));
+        objval[i] = model.getObjValue();
+        status[i] = model.status();
+    }
+
+    return List::create(
+        Named("solution") = sol,
+        Named("objval")   = objval,
+        Named("status")   = status
+    );
 }

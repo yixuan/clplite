@@ -36,7 +36,7 @@
 #'   \item{\code{status}}{Status code for each problem solved.}
 #' }
 #'
-#' @author Yixuan Qiu \email{yixuanq@@gmail.com}
+#' @author Yixuan Qiu <\email{yixuanq@@gmail.com}>
 #'
 #' @export
 #' @keywords optimize
@@ -60,6 +60,8 @@ clp_solve = function(obj, A,
                      var_lb = rep(0, ncol(A)), var_ub = rep(Inf, ncol(A)),
                      max = FALSE, control = list())
 {
+    obj = as.matrix(obj)
+
     supported_classes = c("dgTMatrix", "dgCMatrix", "dgRMatrix")
     if(!(class(A) %in% supported_classes))
     {
@@ -85,5 +87,9 @@ clp_solve = function(obj, A,
     pars = intersect(names(control_param), names(control))
     control_param[pars] = control[pars]
 
-    clp_solve_(obj, A, constr_lb, constr_ub, var_lb, var_ub, max, control_param)
+    res = clp_solve_(obj, A, constr_lb, constr_ub, var_lb, var_ub, max, control_param)
+    if(ncol(res$solution) == 1)
+        res$solution = as.numeric(res$solution)
+
+    res
 }

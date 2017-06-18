@@ -6,13 +6,15 @@
 using Rcpp::NumericVector;
 using Rcpp::IntegerVector;
 using Rcpp::S4;
+using Rcpp::List;
 
 // [[Rcpp::export]]
 NumericVector clp_solve_(
     NumericVector obj, S4 mat,
     NumericVector constr_lb, NumericVector constr_ub,
     NumericVector var_lb, NumericVector var_ub,
-    bool obj_max
+    bool obj_max,
+    List control
 )
 {
     // Create model
@@ -20,6 +22,9 @@ NumericVector clp_solve_(
 
     // -1 for maximization, 1 for minimization
     model.setOptimizationDirection(obj_max ? -1 : 1);
+
+    // Logging level
+    model.setLogLevel(Rcpp::as<int>(control["verbose"]));
 
     // Constraint matrix
     std::string type = mat.attr("class");

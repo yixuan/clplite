@@ -25,7 +25,7 @@
 clp_solve = function(obj, A,
                      constr_lb = rep(-Inf, nrow(A)), constr_ub = rep(Inf, nrow(A)),
                      var_lb = rep(0, ncol(A)), var_ub = rep(Inf, ncol(A)),
-                     max = FALSE)
+                     max = FALSE, control = list())
 {
     supported_classes = c("dgTMatrix", "dgCMatrix", "dgRMatrix")
     if(!(class(A) %in% supported_classes))
@@ -45,5 +45,12 @@ clp_solve = function(obj, A,
         }
     }
 
-    clp_solve_(obj, A, constr_lb, constr_ub, var_lb, var_ub, max)
+    ## Control parameters
+    control_param = list(
+        verbose = 0
+    )
+    pars = intersect(names(control_param), names(control))
+    control_param[pars] = control[pars]
+
+    clp_solve_(obj, A, constr_lb, constr_ub, var_lb, var_ub, max, control_param)
 }

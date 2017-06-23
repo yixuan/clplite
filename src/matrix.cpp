@@ -24,7 +24,7 @@ CoinPackedMatrix* from_dgCMatrix(Rcpp::S4 mat)
     IntegerVector mlen = Rcpp::diff(mp);
     NumericVector mx   = mat.slot("x");
 
-    CoinPackedMatrix* cmat = new CoinPackedMatrix(true, dim[1], dim[0], mx.length(),
+    CoinPackedMatrix* cmat = new CoinPackedMatrix(true, dim[0], dim[1], mx.length(),
                                      mx.begin(), mi.begin(), mp.begin(), mlen.begin());
     cmat->setDimensions(dim[0], dim[1]);
 
@@ -39,7 +39,7 @@ CoinPackedMatrix* from_dgRMatrix(Rcpp::S4 mat)
     IntegerVector mlen = Rcpp::diff(mp);
     NumericVector mx   = mat.slot("x");
 
-    CoinPackedMatrix* cmat = new CoinPackedMatrix(false, dim[0], dim[1], mx.length(),
+    CoinPackedMatrix* cmat = new CoinPackedMatrix(false, dim[1], dim[0], mx.length(),
                                      mx.begin(), mj.begin(), mp.begin(), mlen.begin());
     cmat->setDimensions(dim[0], dim[1]);
 

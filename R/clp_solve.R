@@ -55,6 +55,12 @@
 #' var_lb = c(0, 0, 0)
 #'
 #' clp_solve(obj, mat, constr_ub = constr_ub, var_lb = var_lb, max = TRUE)
+#'
+#' ## Handling sparse matrices
+#' if(require("Matrix")) {
+#'     spmat = as(mat, "sparseMatrix")
+#'     clp_solve(obj, spmat, constr_ub = constr_ub, var_lb = var_lb, max = TRUE)
+#' }
 clp_solve = function(obj, A,
                      constr_lb = rep(-Inf, nrow(A)), constr_ub = rep(Inf, nrow(A)),
                      var_lb = rep(0, ncol(A)), var_ub = rep(Inf, ncol(A)),

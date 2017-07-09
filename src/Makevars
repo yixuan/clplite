@@ -1,5 +1,6 @@
+PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
 PKG_CPPFLAGS = -I./Clp -I./CoinUtils -DHAVE_CONFIG_H
-PKG_LIBS = -L./Clp -lClp -L./CoinUtils -lCoinUtils
+PKG_LIBS = -L./Clp -lClp -L./CoinUtils -lCoinUtils $(SHLIB_OPENMP_CXXFLAGS)
 
 .PHONY: all clean
 

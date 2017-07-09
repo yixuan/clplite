@@ -88,12 +88,16 @@ clp_solve = function(obj, A,
 
     ## Control parameters
     control_param = list(
-        verbose = 0
+        verbose = 0,
+        nthread = 1
     )
     pars = intersect(names(control_param), names(control))
     control_param[pars] = control[pars]
 
-    res = clp_solve_(obj, A, constr_lb, constr_ub, var_lb, var_ub, max, control_param)
+    nthread = as.integer(control_param$nthread)
+    clp_solver = if(nthread > 1) clp_solve_parallel_ else clp_solve_
+
+    res = clp_solver(obj, A, constr_lb, constr_ub, var_lb, var_ub, max, control_param)
     if(ncol(res$solution) == 1)
         res$solution = as.numeric(res$solution)
 

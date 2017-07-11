@@ -5,3 +5,7 @@ clp_solve_ <- function(obj, mat, constr_lb, constr_ub, var_lb, var_ub, obj_max, 
     .Call('clplite_clp_solve_', PACKAGE = 'clplite', obj, mat, constr_lb, constr_ub, var_lb, var_ub, obj_max, control)
 }
 
+clp_solve_parallel_ <- function(obj, mat, constr_lb, constr_ub, var_lb, var_ub, obj_max, control) {
+    .Call('clplite_clp_solve_parallel_', PACKAGE = 'clplite', obj, mat, constr_lb, constr_ub, var_lb, var_ub, obj_max, control)
+}
+

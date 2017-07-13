@@ -123,7 +123,7 @@ List clp_solve_parallel_(
     int* status_ptr = status.begin();
 
     // Number of threads for OpenMP
-    const int nthread = Rcpp::as<int>(control["verbose"]);
+    const int nthread = Rcpp::as<int>(control["nthread"]);
 
     // Solving
 #ifdef _OPENMP

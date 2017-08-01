@@ -50,8 +50,8 @@ List clp_solve_(
     model.primal();
 
     // Get pointer to solution
-    const int nc = model.numberColumns();
-    const double* solution = model.primalColumnSolution();
+    int nc = model.getNumCols();
+    const double* solution = model.getColSolution();
 
     // Wrap result
     const int nproblem = obj.ncol();
@@ -69,8 +69,8 @@ List clp_solve_(
     {
         model.chgObjCoefficients(&obj(0, i));
         model.primal();
-        const int nc = model.numberColumns();
-        const double* solution = model.primalColumnSolution();
+        nc = model.getNumCols();
+        solution = model.getColSolution();
 
         std::copy(solution, solution + nc, &sol(0, i));
         objval[i] = model.getObjValue();
@@ -147,7 +147,7 @@ List clp_solve_parallel_(
         model.primal();
 
         // Get pointer to solution
-        const double* solution = model.primalColumnSolution();
+        const double* solution = model.getColSolution();
 
         // Copy solution to R objects
         std::copy(solution, solution + nvar, sol_ptr + nvar * i);

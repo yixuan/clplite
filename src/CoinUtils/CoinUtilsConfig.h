@@ -2,7 +2,7 @@
  * All Rights Reserved.
  * This code is published under the Eclipse Public License.
  *
- * $Id: CoinUtilsConfig.h 1434 2011-06-06 13:47:41Z stefan $
+ * $Id$
  *
  * Include file for the configuration of CoinUtils.
  *
@@ -43,3 +43,6 @@
 #endif /* HAVE_CONFIG_H */
 
 #endif /*__COINUTILSCONFIG_H__*/
+
+/* vi: softtabstop=2 shiftwidth=2 expandtab tabstop=2
+*/

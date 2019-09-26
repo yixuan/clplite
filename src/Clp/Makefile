@@ -25,6 +25,11 @@ OBJS = ClpCholeskyBase.o \
 	ClpNonLinearCost.o \
 	ClpNode.o \
 	ClpObjective.o \
+	ClpPEDualRowDantzig.o \
+	ClpPEDualRowSteepest.o \
+	ClpPEPrimalColumnDantzig.o \
+	ClpPEPrimalColumnSteepest.o \
+	ClpPESimplex.o \
 	ClpPackedMatrix.o \
 	ClpPlusMinusOneMatrix.o \
 	ClpPredictorCorrector.o \

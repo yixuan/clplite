@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // clp_solve_
 List clp_solve_(NumericMatrix obj, S4 mat, NumericVector constr_lb, NumericVector constr_ub, NumericVector var_lb, NumericVector var_ub, bool obj_max, List control);
-RcppExport SEXP clplite_clp_solve_(SEXP objSEXP, SEXP matSEXP, SEXP constr_lbSEXP, SEXP constr_ubSEXP, SEXP var_lbSEXP, SEXP var_ubSEXP, SEXP obj_maxSEXP, SEXP controlSEXP) {
+RcppExport SEXP _clplite_clp_solve_(SEXP objSEXP, SEXP matSEXP, SEXP constr_lbSEXP, SEXP constr_ubSEXP, SEXP var_lbSEXP, SEXP var_ubSEXP, SEXP obj_maxSEXP, SEXP controlSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -25,7 +25,7 @@ END_RCPP
 }
 // clp_solve_parallel_
 List clp_solve_parallel_(NumericMatrix obj, S4 mat, NumericVector constr_lb, NumericVector constr_ub, NumericVector var_lb, NumericVector var_ub, bool obj_max, List control);
-RcppExport SEXP clplite_clp_solve_parallel_(SEXP objSEXP, SEXP matSEXP, SEXP constr_lbSEXP, SEXP constr_ubSEXP, SEXP var_lbSEXP, SEXP var_ubSEXP, SEXP obj_maxSEXP, SEXP controlSEXP) {
+RcppExport SEXP _clplite_clp_solve_parallel_(SEXP objSEXP, SEXP matSEXP, SEXP constr_lbSEXP, SEXP constr_ubSEXP, SEXP var_lbSEXP, SEXP var_ubSEXP, SEXP obj_maxSEXP, SEXP controlSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -41,10 +41,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// read_mps_
+List read_mps_(std::string mps_file);
+RcppExport SEXP _clplite_read_mps_(SEXP mps_fileSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type mps_file(mps_fileSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_mps_(mps_file));
+    return rcpp_result_gen;
+END_RCPP
+}
+// clp_mps_solve_
+List clp_mps_solve_(std::string mps_file, bool obj_max, List control);
+RcppExport SEXP _clplite_clp_mps_solve_(SEXP mps_fileSEXP, SEXP obj_maxSEXP, SEXP controlSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type mps_file(mps_fileSEXP);
+    Rcpp::traits::input_parameter< bool >::type obj_max(obj_maxSEXP);
+    Rcpp::traits::input_parameter< List >::type control(controlSEXP);
+    rcpp_result_gen = Rcpp::wrap(clp_mps_solve_(mps_file, obj_max, control));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"clplite_clp_solve_", (DL_FUNC) &clplite_clp_solve_, 8},
-    {"clplite_clp_solve_parallel_", (DL_FUNC) &clplite_clp_solve_parallel_, 8},
+    {"_clplite_clp_solve_", (DL_FUNC) &_clplite_clp_solve_, 8},
+    {"_clplite_clp_solve_parallel_", (DL_FUNC) &_clplite_clp_solve_parallel_, 8},
+    {"_clplite_read_mps_", (DL_FUNC) &_clplite_read_mps_, 1},
+    {"_clplite_clp_mps_solve_", (DL_FUNC) &_clplite_clp_mps_solve_, 3},
     {NULL, NULL, 0}
 };
 
